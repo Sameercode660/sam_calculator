@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        *{
+            margin: 0%;
+            padding: 0%;
+            box-sizing: border-box;
+        }
+        html, body{
+            width: 100%;
+            height: 100%;
+
+        }
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .main{
+            border-radius: 20px;
+            width: 300px;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: black;
+        }
+        .mode-container{
+            position: relative;
+            bottom: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+        .light, .dark{
+            border: 1px solid red;
+            margin: 2px;
+            padding: 2px 10px;
+            border-radius: 20px;
+            color: white;
+        }
+        .input-container{
+            width: 100%;
+        }
+        #number{
+            width: 100%;
+            height: 50px;
+            font-size: 36px;
+            text-align: right;
+            border: none;
+            outline: none;
+            padding: 5px 10px;
+            color: white;
+            position: relative;
+            top: 80px;
+            background-color: black;
+        }
+        #number::-webkit-inner-spin-button,
+        #number::-webkit-outer-spin-button{
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .button-container{
+            height: 340px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+            top: 88px;
+            background-color: rgb(35, 35, 35);
+            border-top-left-radius:10px ;
+            border-top-right-radius:10px ;
+            border-bottom-left-radius:20px ;
+            border-bottom-right-radius:20px ;
+        }
+        .item{
+            width: 60px;
+            height: 60px;
+            font-size: 20px;
+            border: none;
+            outline: none;
+            padding: 5px;
+            margin: 2px;
+            border-radius:50% ;
+            color: white;
+            background-color: transparent;
+        }
+
+        #item1, #item2, #item3{
+            color: aqua;
+        }
+        #item4, #item8, #item12, #item16, #item20{
+            color: orange;
+            font-size: 25px;
+        }
+        .lightButton, .darkButton{
+            color: white;
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="mode-container">
+            <div class="light">
+                <button class="lightButton">light</button>
+            </div>
+            <div class="dark">
+                <button class="darkButton">Dark</button>
+            </div>
+        </div>
+        <div class="input-container">
+            <input type="text" inputmode="numeric" pattern="[0-9]*" name="number" id="number" class="numInput">
+        </div>
+        <div class="button-container">
+            <div class="first-row">
+                <button class="item" id="item1">AC</button>
+                <button class="item" id="item2">+/-</button>
+                <button class="item" id="item3">%</button>
+                <button class="item" id="item4">/</button>
+            </div>
+            <div class="second-row">
+                <button class="item" id="item5">7</button>
+                <button class="item" id="item6">8</button>
+                <button class="item" id="item7">9</button>
+                <button class="item" id="item8">*</button>
+            </div>
+            <div class="third-row">
+                <button class="item" id="item9">4</button>
+                <button class="item" id="item10">5</button>
+                <button class="item" id="item11">6</button>
+                <button class="item" id="item12">-</button>
+            </div>
+            <div class="forth-row">
+                <button class="item" id="item13">1</button>
+                <button class="item" id="item14">2</button>
+                <button class="item" id="item15">3</button>
+                <button class="item" id="item16">+</button>
+            </div>
+            <div class="fifth-row">
+                <button class="item" id="item17">r</button>
+                <button class="item" id="item18">0</button>
+                <button class="item" id="item19">.</button>
+                <button class="item" id="item20">=</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // empty string for calculation or evaluation for calculator result
+        let str = ""
+
+        // Selecting all the buttons item of the button container
+        let buttons = document.querySelectorAll('.item')
+
+        // selectirng the input element for showing the result of calculation
+        let input = document.querySelector('input')
+
+        // selecting the button for handling the dark effect
+        let darkButton = document.querySelector('.darkButton')
+
+        // selecting the button for handling the light effect
+        let lightButton = document.querySelector('.lightButton')
+
+        // This is the main container which is used for handling the dark and light effect using it property backgoundColor = black/white
+        let mainContainer = document.querySelector('.main')
+
+        // This is the button container in which all the element are stored of button
+        let buttonContainer = document.querySelector('.button-container')
+
+        // This is the array where all the buttons items are stored in the array format
+        let selectedButton = Array.from(buttons) 
+        
+        // for making the dark effect starts from here
+        darkButton.addEventListener('click', ()=>{
+            darkButton.style.color = 'white'
+            lightButton.style.color = 'white'
+            mainContainer.style.backgroundColor = 'black'
+            mainContainer.style.border = '1px solid black'
+            input.style.backgroundColor = 'transparent'
+            input.style.color = 'black'
+            buttonContainer.style.backgroundColor = 'rgb(35, 35, 35)'
+
+            for(let i = 0; i < selectedButton.length ; i++)  
+            {
+                if(selectedButton[i].id == 'item4' || selectedButton[i].id == 'item8' || selectedButton[i].id == 'item12' || selectedButton[i].id == 'item16' || selectedButton[i].id == 'item20' || selectedButton[i].id == 'item1' || selectedButton[i].id == 'item2' || selectedButton[i].id == 'item3')
+                {
+                    continue;
+                }
+                else
+                {
+                    selectedButton[i].style.color = 'white'
+                }
+            }
+
+        })// ends
+
+        // for making the light effect, code starts from here
+        lightButton.addEventListener('click', ()=>{
+            darkButton.style.color = 'black'
+            lightButton.style.color = 'black'
+            mainContainer.style.backgroundColor = 'white'
+            mainContainer.style.border = '1px solid black'
+            input.style.backgroundColor = 'transparent'
+            input.style.color = 'black'
+            buttonContainer.style.backgroundColor = 'transparent'
+
+            for(let i = 0; i < selectedButton.length ; i++)  
+            {
+                if(selectedButton[i].id == 'item4' || selectedButton[i].id == 'item8' || selectedButton[i].id == 'item12' || selectedButton[i].id == 'item16' || selectedButton[i].id == 'item20' || selectedButton[i].id == 'item1' || selectedButton[i].id == 'item2' || selectedButton[i].id == 'item3')
+                {
+                    continue;
+                }
+                else
+                {
+                    selectedButton[i].style.color = 'black'
+                }
+            }
+        })// ends
+
+         
+        // code for the logic of calculator starts from here
+        Array.from(buttons).forEach((button)=>{
+            button.addEventListener('click', (e)=>{
+                 if(e.target.innerHTML == '=')
+                 {
+                     str  = eval(str)
+                     input.value = str;
+                 }
+                 else if(e.target.innerHTML == 'AC')
+                 {
+                    str = ''
+                    input.value = str;
+                 }
+                 else
+                 {
+                     str = str + e.target.innerHTML;
+                     input.value = str;
+                 }
+            })
+        })// ends
+    </script>
+</body>
+</html>
